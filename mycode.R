@@ -86,10 +86,8 @@ m <- matrix(1:4,nrow=2,ncol=2)
 dimnames(m) <- list(c("a","b"),c("c","d")) #First element of list is row names and second is col names
 
 #Reading Tabular Data
-#read.table() #Minimum required is path. Check defaults to understand the function properly
-data <- read.csv("lcos_details.csv")
-
-
-
+#Minimum required is path. Check defaults to understand the function properly
+data <- read.csv("lcos_details.csv") #Used for tabular data
+data2 <- read.table("Test.txt") #Used to read simple text files
 
 
