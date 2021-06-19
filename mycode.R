@@ -75,6 +75,20 @@ x <- data.frame(foo=1:4,bar=c(T,T,F,T))
 nrow(x) #provides number of rows in x
 ncol(x) #provides number of cols in x
 
+#Names
+x <- 1:3
+names(x) <- c("foo","bar","norf")
+names(x) #Provides the names of elements of x as a vector
+
+x <- list(a=1:9, b=c("foo","bar","norf"), c=c(T,F)) #Naming list elements
+
+m <- matrix(1:4,nrow=2,ncol=2)
+dimnames(m) <- list(c("a","b"),c("c","d")) #First element of list is row names and second is col names
+
+#Reading Tabular Data
+#read.table() #Minimum required is path. Check defaults to understand the function properly
+data <- read.csv("lcos_details.csv")
+
 
 
 
