@@ -70,8 +70,10 @@ x <- c(1,2,NA,NaN,5,6)
 is.na(x) #Used to check if x is NA
 is.nan(x) #Used to check if x is NaN
 
-
-
+#Data Frames
+x <- data.frame(foo=1:4,bar=c(T,T,F,T))
+nrow(x) #provides number of rows in x
+ncol(x) #provides number of cols in x
 
 
 
