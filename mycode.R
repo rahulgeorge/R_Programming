@@ -110,7 +110,44 @@ dump(c("x","y"), file = "data.R") #dump is able to write multiple R objects whil
 rm(x, y) #command to remove x & y objects from memory
 source("data.R")
 
+#Connections: Interface to Outside World
+con <- file("Test.txt", "r") #Connection to file Test.txt with read only condition. "w" for writing, "a" for appending
+data <- read.csv(con)
+close(con) #Above three lines is parallel to data <- read.csv("foo.txt")
 
+con <- gzfile("Test.gz") #Opening connection to a GZip file
+x <- readLines(con, 1) #Can read just required lines using the connection
+close(con)
 
+con <- url("https://www.mdrift.com/","r") #Creating connection to non file URL 
+x <- readLines(con, 5)
+close(con)
 
+#Subsetting
+# [ Single bracket operator always returns the same class as the original. Can be used to select more than one element.
+# [[ is used to extract elements of a list or data frame. It can be used to extract only a single element and class of the returned object need not be a list or data frame
+# $ is used to extract elements of a list or data frame by name
+
+x <- c("a","b","c","c","d","a")
+x[1] #Returns a, the first element
+x[1:4] #creates a sequence of elements with first 4
+x[x > "a"] #Logical operator returns all elements greater than a
+
+u <- x > "a" #Creates a logical vector where the condition is true
+x[u] #Returns all elements where the condition is true
+
+#Subsetting Lists
+x <- list(foo=1:4, bar=0.6, norf=c("a","b","c"))
+x[1] #Returns the first element foo as a list itself
+x[[1]] #Returns the first element as just a sequence
+x$bar #Returns element with the name bar
+x[["bar"]] #Same as above. Returns just the element bar
+x["bar"] #Returns bar as a list.Property of single bracket
+x[c(1,3)] #Extracting multiple elements. Need to use single bracket
+x[[c(1,3)]] #For double brackets, this acts like a souble subsetting
+x[[1]][[3]] #Double subsetting. Same as the statement above
+
+name <- "foo"
+x[[name]] #Double bracket can handle computed indices like name here. 
+x$name #This wont work as there is no element name in x
 
