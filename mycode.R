@@ -89,5 +89,28 @@ dimnames(m) <- list(c("a","b"),c("c","d")) #First element of list is row names a
 #Minimum required is path. Check defaults to understand the function properly
 data <- read.csv("lcos_details.csv") #Used for tabular data
 data2 <- read.table("Test.txt") #Used to read simple text files
+data3 <- read.table("lcos_details.csv",header=TRUE,sep=",",nrows=2) #read.table is universal. Reading CSV here
+
+classes <- sapply(data3,class) #Getting classes of the data to pass to read.table
+data4 <- read.table("lcos_details.csv",header=TRUE,sep=",",nrows=2,colClasses=classes)
+
+#Textual Data Formats
+  #dump() #writing data
+  #dput() #writing data
+  #source() #Reading data written using dump
+  #dget() #Reading data written using dput
+
+y <- data.frame(a=1,b="a")
+dput(y, file = "y.R")
+z <- dget("y.R")
+
+x <- "foo"
+y <- data.frame(a = 1, b = "a")
+dump(c("x","y"), file = "data.R") #dump is able to write multiple R objects while dput can manage only one
+rm(x, y) #command to remove x & y objects from memory
+source("data.R")
+
+
+
 
 
