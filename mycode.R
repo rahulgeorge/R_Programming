@@ -47,6 +47,7 @@ dim(m) #Attribute - integer vector of length 2, row & column
 attributes(m) #Gives attributes of m
 
 m <- matrix(1:6, nrow = 2, ncol = 3) #First fills rows then columns
+y <- matrix(rep(10,4),2,2) #Repeats the value "10" 4 times
 
 m <- 1:10
 dim(m) <- c(2,5) #Alt way of creating a matrix
@@ -150,4 +151,50 @@ x[[1]][[3]] #Double subsetting. Same as the statement above
 name <- "foo"
 x[[name]] #Double bracket can handle computed indices like name here. 
 x$name #This wont work as there is no element name in x
+
+#Subsetting Matrices
+x <- matrix(1:6,2,3)
+x[1,2] #Returns 1st row 2nd column value
+x[1,] #Indices can be missing two. Will return all the values in 1st row
+x[1,2,drop=FALSE] #Returns the cell as a matrix. Normal single bracket doesn't return a matrix. 
+x[1,,drop=FALSE] 
+
+#Partial Matching
+x <- list(aardvark = 1:5)
+x$a #Since only one element matches the partial a, it returns aardvark
+x[["a"]] #Double brackects doesnt do partial matching by default
+x[["a", exact = FALSE]] #Does partial matching
+
+#Removing NA Values
+x <- c(1,2,NA,3,4,5,NA,7)
+bad <- is.na(x)
+x[!bad]
+
+x <- c(1,2,NA,4,NA,NA)
+y <- c("a","b",NA,"d",NA,"f")
+good <- complete.cases(x,y) #Returns only indices where both have non-missing values
+x[good]
+y[good]
+
+#Managing missing values in DataFrames
+data <- read.csv("lcos_details.csv")
+good <- complete.cases(data)
+data[good,] #removes rows with NA values
+data[good,][1:3,] #removes rows with NA and returns first 3 good data
+
+#Vectorized Operations
+x <- 1:4
+y <- 6:9
+x + y #Add corresponding positions in each vector
+x > 2 #Compares each element in x 2 and outputs
+y == 8 
+x * y
+x / y
+
+x <- matrix(1:4,2,2)
+y <- matrix(rep(10,4),2,2)
+
+x * y #element wise multiplication
+x / y
+x %*% y #True matrix multiplication
 
