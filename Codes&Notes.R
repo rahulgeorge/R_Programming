@@ -198,3 +198,37 @@ x * y #element wise multiplication
 x / y
 x %*% y #True matrix multiplication
 
+#Control Structures - If Else
+x <- 1
+if(x>3) {
+  y <- 10
+} else {
+  y <- 0
+}
+
+y1 <- if(x<3) { #This is a valid statement in R
+  10
+} else {
+  0
+}
+
+#For Loop
+x <- c("a","b","c","d")
+
+for (i in 1:4) {
+  #print(x[i])
+}
+
+for (i in seq_along(x)) {
+  #print(x[i])
+}
+
+for (letter in x) { #Letter is just a variable. Can be named anything
+  #print(letter)
+}
+
+for (i in 1:4) y <- print(x[i])
+
+x <- matrix(1:6,2,3)
+
+
