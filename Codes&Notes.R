@@ -8,7 +8,7 @@ second <- function(x) {
 }
 
 x <- 1
-print(x)
+#print(x)
 msg <- "hello" #Assignment Operator
 x <- 1:20 #Range using column
 
@@ -213,7 +213,7 @@ y1 <- if(x<3) { #This is a valid statement in R
 }
 
 #For Loop
-x <- c("a","b","c","d")
+x <- c("a","b","c","d",1)
 
 for (i in 1:4) {
   #print(x[i])
@@ -227,8 +227,65 @@ for (letter in x) { #Letter is just a variable. Can be named anything
   #print(letter)
 }
 
-for (i in 1:4) y <- print(x[i])
+for (i in 1:4) y <- x[i]
 
 x <- matrix(1:6,2,3)
+for(i in seq_len(nrow(x))) {
+  for(j in seq_len(ncol(x))) {
+   #print(x[i,j])
+  }
+}
+
+#While Loop
+
+count <- 0
+while(count < 10) {
+  #print(count)
+  count <- count + 1
+}
+
+z <- 5
+while (z >= 3 && z <= 10) { #Condition is always checked left to right
+  #print(z)
+  coin <- rbinom(1,1,0.5)
+  #print(" Coin is") 
+  #print(coin)
+  if(coin == 1) { #Random walk using a coin toss. No known length of while loop
+    z <- z+1
+  } else {
+    z <- z-1
+  }
+}
+
+#Control Structures - Repeat,Next,Break
+
+x0 <- 1
+tol <- le-8
+
+repeat {
+  x1 <- computeEstimate() #Not a real function
+  if(abs(x1-x0) < tol) { #Unpredictable, possibly infinite loop. Better to use For
+    break
+  } else {
+    x0 <- x1
+  }
+}
+
+for(i in 1:100) {
+  if(i <= 20) {
+    next #Skips first 20 iteration
+  }
+  #Do something here
+  #Return will quit the entire function and return a value. Detailed later.
+}
+
+
+
+
+
+
+
+
+
 
 
