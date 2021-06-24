@@ -259,18 +259,6 @@ while (z >= 3 && z <= 10) { #Condition is always checked left to right
 
 #Control Structures - Repeat,Next,Break
 
-x0 <- 1
-tol <- le-8
-
-repeat {
-  x1 <- computeEstimate() #Not a real function
-  if(abs(x1-x0) < tol) { #Unpredictable, possibly infinite loop. Better to use For
-    break
-  } else {
-    x0 <- x1
-  }
-}
-
 for(i in 1:100) {
   if(i <= 20) {
     next #Skips first 20 iteration
@@ -279,13 +267,32 @@ for(i in 1:100) {
   #Return will quit the entire function and return a value. Detailed later.
 }
 
+#Dates and Times
 
+z <- as.Date("1970-01-01")
 
+x <- Sys.time() #Current system time. Default in POSIXct, number of seconds
+p <- as.POSIXlt(x) #Storing in POSIXlt format
+names(unclass(p)) #View items in POSIXlt format. Very useful info
+p$sec
 
+datestring <- c("January 10, 2012 10:40","December 9, 2011 9:10")
+x <- strptime(datestring, "%B %d, %Y %H:%M") #Function used to convert string to date format
 
+x <- as.Date("2012-01-01")
+y <- strptime("9 Jan 2011 11:34:21", "%d %b %Y %H:%M:%S")
+#x - y #Not possible dur to mixing formats
+x <- as.POSIXlt(x)
+x - y #Possible now
+z <- strptime("9 Jan 2011 16:34:21", "%d %b %Y %H:%M:%S")
+z <- Sys.time()
+Z <- as.POSIXlt(z, tz= "GMT") #Convertimg time zones. 
 
-
-
+#Swirl Notes Logical
+ints <- sample(10)
+which(ints > 5) #which() function takes a logical vector as an argument and returns the indices of the vector that are TRUE
+any(ints <0) #any() function will return TRUE if one or more of the elements in the logical vector is TRUE
+all(ints >0) #all() function will return TRUE if every element in the logical vector is TRUE
 
 
 

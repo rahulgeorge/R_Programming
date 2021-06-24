@@ -25,11 +25,32 @@ myplot <- function(x, y, type = 'l', ...) { # ... argument take all extra argume
   plot(x,y,type = type, ...)
 }
 
+#Lexical Scoping
 
+make.power <- function(n) {
+  pow <- function(x) { #Return is a function again
+    x^n
+  }
+  pow
+}
 
+cube <- make.power(3) #Sample setup in console
+square <- make.power(2)
+cube(3) #Utilises the returned function to return 27
+square(3) #Returns 9
 
+ls(environment(cube)) #Returns "n"   "pow"
+get("n",environment(cube)) #Returns 3
 
-
+y <- 10
+f <- function(x) {
+  y <- 2
+  y^2 + g(x)
+}
+g <- function(x) {
+  x*y
+}
+f(3) #Should return the value 34 as value of y for g(x) will be from global environment as per lexical scoping
 
 
 
