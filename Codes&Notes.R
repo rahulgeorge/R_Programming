@@ -1,3 +1,6 @@
+#Random useful
+table(flags$landmass) #Provides the landmass information in flags database as a vector count
+
 myfunction <- function() {
   x <- rnorm(100)
   mean(x)
@@ -36,7 +39,7 @@ as.logical(x)
 as.character(x)
 
 x <- c("a","b","c")
-as.numeric(x) #Non-sensical coercion. Provides NA as value
+#as.numeric(x) #Non-sensical coercion. Provides NA as value
 
 #Lists
 x <- list(1:9,c("a","b"),TRUE,1+4i)
@@ -237,7 +240,6 @@ for(i in seq_len(nrow(x))) {
 }
 
 #While Loop
-
 count <- 0
 while(count < 10) {
   #print(count)
@@ -258,7 +260,6 @@ while (z >= 3 && z <= 10) { #Condition is always checked left to right
 }
 
 #Control Structures - Repeat,Next,Break
-
 for(i in 1:100) {
   if(i <= 20) {
     next #Skips first 20 iteration
@@ -268,7 +269,6 @@ for(i in 1:100) {
 }
 
 #Dates and Times
-
 z <- as.Date("1970-01-01")
 
 x <- Sys.time() #Current system time. Default in POSIXct, number of seconds
@@ -293,6 +293,78 @@ ints <- sample(10)
 which(ints > 5) #which() function takes a logical vector as an argument and returns the indices of the vector that are TRUE
 any(ints <0) #any() function will return TRUE if one or more of the elements in the logical vector is TRUE
 all(ints >0) #all() function will return TRUE if every element in the logical vector is TRUE
+
+#Loop functions - lapply
+x <- list(a = 1:5, b = rnorm(10))
+lapply(x,mean) #Takes in a list and applyies a function to every element in the list. Return is always a list
+
+x <- 1:4
+lapply(x,runif) #runif generates 'n' random unifrom variables as per number in argument, x
+lapply(x, runif, min = 0, max = 10) #min and max here is passed to runif function through ... 
+
+x <- list(a = matrix(1:4,2,2), b = matrix(1:6,3,2))
+lapply(x, function(arg) arg[,1]) #Anonymous function definition
+
+x <- list(a = 1:4, b = rnorm(10), c = rnorm(20,1), d = rnorm(100,5))
+lapply(x,mean) #Returns a list as lapply always returns a list
+sapply(x,mean) #sapply aims to simplify the result returned. In this case a plain vector is returned
+
+#Loop functions - apply
+x <- matrix(rnorm(200),20,10)
+apply(x,2,mean) #Applies mean function on x. 2 here is called the margin here and selects dimension 2 to be preserved (Column in this case)
+apply(x,1,sum) #margin 1 preserves the first dimension row in this case
+x <- matrix(rnorm(200),20,10)
+apply(x,1,quantile,probs = c(0.25,0.75)) #function to calculate the 25th percentile and 75the percentile. Probs is passed to quantile function and apply returns a 2by20 matrix to include all results
+
+a <- array(rnorm(2*2*10),c(2,2,10)) #Array here is 3 dimensional. Like bunch of 2by2 matrixes stacked
+apply(a,c(1,2),mean) #Preserves dimensions 1 & 2 and means over the third dimension
+rowMeans(a, dims=2) #Same as above using rowMeans function and preserving 2 dimensions
+
+  #Col/ Row sums and means : These are much faster operations.
+rowSums #apply(x,1,sum)
+rowMeans #apply(x,1,mean)
+colSums #apply(x,2,sum)
+colMeans #apply(x,2,mean)
+
+#Loop functions - mapply
+  #used to apply multiple variables, lists, to a single function using a single function. lapply & sapply will only take one argument for a function
+list(rep(1,4),rep(2,3),rep(3,2),rep(4,1))
+mapply(rep, 1:4, 4:1) #Achieves the same result as above.
+
+#Loop functions - tapply
+  #to apply a function over subsets of a vector. Need arguments vector & factors over which the function needs to apply
+x <- c(rnorm(10), runif(10), rnorm(10,1))
+f <- gl(3,10) #Generate factor levels
+tapply(x, f, mean)
+
+#Loop functions - split
+  #Split is not a loop function but splits a vector into different groups based on factor. Can apply mapply or sapply once the split is done instead of tapply
+
+x <-  c(rnorm(10), runif(10), rnorm(10,1))
+f <- gl(3,10)
+split(x, f)
+lapply(split(x,f), mean) #Similar to tapply here.
+
+  #example with more complicated data set
+library(datasets)
+head(airquality)
+s <- split(airquality, airquality$Month)
+lapply(s,function(x) colMeans(x[,c("Ozone","Solar.R", "Wind")], na.rm = TRUE)) #List output
+sapply(s,function(x) colMeans(x[,c("Ozone","Solar.R", "Wind")], na.rm = TRUE)) #Matrix output
+  
+  #Splitting on More than One Level
+x <- rnorm(10)
+f1 <- gl(2,5)
+f2 <- gl(5,2)
+interaction(f1,f2)
+#str(split(x, list(f1,f2), drop = TRUE)) #Splits x into all combination levels. Uses lise(f1,f2) to avoid interaction function used earlier. drop = TRUE removes empty levels
+
+#DEBUGGING TOOLS
+#traceback() #Immediately calling this after an error occours shows where the error occoured
+#debug(function)  #goes through the function step by step to find the error. You can debug another function within the function being debugged
+#Browser, trace & recover are other things. Need to explore more
+
+
 
 
 
