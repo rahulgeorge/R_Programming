@@ -364,6 +364,74 @@ interaction(f1,f2)
 #debug(function)  #goes through the function step by step to find the error. You can debug another function within the function being debugged
 #Browser, trace & recover are other things. Need to explore more
 
+#Str Function (stands for structure)
+
+x <- rnorm(100, 2, 4)
+summary(x) #Good function. Provides a summary :)
+str(x) #Very useful in a lot of places. Provides a concise view of the object/ function
+
+f <- gl(40,10) #Factor variable
+str(f)
+
+library(datsets)
+head(airquality)
+str(airquality)
+
+s <- split(airquality, airquality$Month)
+str(s)
+
+#Simulation - Generating Random Numbers
+
+#Default settings
+rnorm(n, mean = 0, sd = 1) #rnorm: generate random Normal variates with a given mean and standard deviation
+dnorm(x, mean = 0, sd = 1, log = FALSE)  #dnorm: evaluate the Normal probability density (with a given mean/SD) at a point
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) #pnorm: evaluate cumulative distribution function for a Normal Distribution
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+
+set.seed(1) #setting random number with set.seed ensures reproducability. Great for simulation and reproducibility.
+rnorm(5)
+rnorm(5)
+set.seed(1)
+rnorm(5)
+
+rpois(10, 1) #Generates poisson data. These are going to be integers. Rate of 1 and 10 numbers
+rpois(10, 2)
+rpois(10,20)
+
+ppois(4, 2) #What is the probability that a poisson random variable is <= 4 when the rate is 2
+
+#Simulating a Linear Model
+
+set.seed(20)
+x <- rnorm(100)
+e <- rnorm(100,0,2)
+y <- 0.5 + 2*x + e
+summary(y)
+plot(x,y)
+
+set.seed(10)
+x <- rbinom(100, 1, 0.5) #If x needs to be binary
+e <- rnorm(100,0,2)
+y <- 0.5 + 2*x + e
+summary(y)
+plot(x,y)
+
+#Simulating from a poisson model
+set.seed(1)
+x <- rnorm(100)
+log.mu <- 0.5+ 0.3*x #Log of mean of the outcome follows a linear model
+y <- rpois(100, exp(log.mu)) #Outcome y has a poisson distribution with mean mu #Here exp of log of mu is taken to essentially get mu
+summary(y)
+plot(x,y)
+
+#Random Sampling
+set.seed(1)
+sample(1:10, 4) #Randomly sample 4 from the distribution of 1 through 10 without replacement
+sample(letters, 5)
+sample(1:10) #Just gives me a random permutation of the sample
+sample(1:10, 4, replace = TRUE) #With replacement
+
+
 
 
 
