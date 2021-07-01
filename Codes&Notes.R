@@ -431,6 +431,43 @@ sample(letters, 5)
 sample(1:10) #Just gives me a random permutation of the sample
 sample(1:10, 4, replace = TRUE) #With replacement
 
+#R Profiler
+
+#Using system.time()
+system.time(readLines("http://www.jhsph.edu")) #Elapsed time > User Time as CPU only performs a small operation and take little time (User time)
+
+hilbert <- function(n) { #Elapsed time < user time as CPU uses parallel processing and we experience less time (Elapsed time)
+  i <- 1:n
+  1 / outer(i-1, i, "+")
+}
+
+x <- hilbert(2000)
+system.time(svd(x))
+
+system.time({ #Use curly brackets to time Longer Expressions
+  n <- 1000
+  r <- numeric(n)
+  for(i in 1:n) {
+    x <- rnorm(n)
+    r[i] <- mean(x)
+  }
+})
+
+  #Rprof function keeps track of the function call stack, at regularly sampled intervals
+    #summaryRprof() summarises output of Rprof(), gives % time spent in each function
+    #by.total method - which divides the time spent in each function by a total, by the total run time.
+    #by.self - does the same thing, but at first subtracts out time spent in functions above in the call stack. 
+    #Useful to avoid top level function time that just spend time calling lower functions
+
+#Base Graphics
+data(cars)
+str(cars)
+plot(cars) #Short for scatterplot. R assumes a lot and provides sensible info here
+
+
+
+
+
 
 
 
